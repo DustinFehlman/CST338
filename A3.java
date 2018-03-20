@@ -1,13 +1,111 @@
 /* Decks of Cards Program
- * Description: TBD
+ * Description: A program to simulate a deck of cards passed out to card players.
  * By: John Seals, Hanna Bonert, Dustin Fehlman, and Carlos Sanchez 
  */
 import java.util.Random;
+import java.util.Scanner;
 
 public class A3 {
     
     public static void main(String[] args) {
+        int totalHands;
+        int numPacks = 1;
+        Scanner keyboard = new Scanner(System.in);
         
+        //Loops until user gives a correct amount of hands.
+        do {
+            System.out.print("How many hands? (1 - 10, please): ");
+            totalHands = Integer.parseInt(keyboard.next());
+        }while(totalHands < 1 || totalHands > 10);
+        
+        Deck singleDeck = new Deck(numPacks);
+        Hand[] handList = new Hand[totalHands];
+        
+        //Creates hands objects and stores them in a array.
+        for(int x = 0; x < handList.length; x++) {
+            handList[x] = new Hand();
+        }
+        //Will delete after issue with topcard is fixed.
+        int testCards = 10;
+        //Loops to put all cards in the deck into player hands.
+        do {
+            for(int playerIndex = 0; playerIndex < handList.length; playerIndex++) {
+                //Used for testing. Will delete System.out.println(singleDeck.dealCard().toString());
+                handList[playerIndex].takeCard(singleDeck.dealCard());
+                --testCards; //will be deleted later;
+            }
+            
+        }while(testCards > 0);
+       
+        //while(singleDeck.getTopCard() > 0);
+         
+        System.out.println("Here are our hands, from an unshuffled deck:");
+        //Loops to print hands
+        for(Hand hand : handList) {
+            boolean badCard;
+            int cardIndex = 0;
+            String handString = "Hand = (";
+            String formattedString = "";
+            do {
+                Card card = new Card();
+                card = hand.inspectCard(cardIndex);
+                badCard = card.getFlag();
+                if(!badCard) {
+                    handString += card.toString() + ", ";
+                    cardIndex++;
+                }else {
+                    formattedString = handString.substring(0, handString.length() - 2) + ")";
+                }     
+            }while(!badCard);
+            System.out.println(formattedString);
+        }
+        
+        System.out.println();
+        System.out.println("Please press ENTER to continue");
+        keyboard.nextLine();
+        keyboard.nextLine();
+        
+        //Resetting all objects and shuffling
+        singleDeck.init(numPacks);
+        singleDeck.shuffle();
+        for(Hand hand : handList) {
+            hand.resetHand();
+        }
+        
+        //Will delete after issue with topcard is fixed.
+        testCards = 10;
+        //Loops to put all cards in the deck into player hands.
+        do {
+            for(int playerIndex = 0; playerIndex < handList.length; playerIndex++) {
+                //Used for testing. Will delete System.out.println(singleDeck.dealCard().toString());
+                handList[playerIndex].takeCard(singleDeck.dealCard());
+                --testCards; //will be deleted later;
+            }
+            
+        }while(testCards > 0);
+       
+        //while(singleDeck.getTopCard() > 0);
+        
+        System.out.println("Here are our hands, from a shuffled deck:");
+        //Loops to print hands
+        for(Hand hand : handList) {
+            boolean badCard;
+            int cardIndex = 0;
+            String handString = "Hand = (";
+            String formattedString = "";
+            do {
+                Card card = new Card();
+                card = hand.inspectCard(cardIndex);
+                badCard = card.getFlag();
+                if(!badCard) {
+                    handString += card.toString() + ", ";
+                    cardIndex++;
+                }else {
+                    formattedString = handString.substring(0, handString.length() - 2) + ")";
+                }     
+            }while(!badCard);
+            System.out.println(formattedString);
+        }     
     }
 }
 
@@ -81,7 +179,7 @@ class Card
  {
     if ( errorFlag == false )
     {
-       return "This card is the " + Character.toString(this.value) + " of " + this.suit.name() + ".";
+       return Character.toString(this.value) + " of " + this.suit.name();
     }
     
     else
