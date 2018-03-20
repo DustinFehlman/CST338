@@ -2,7 +2,7 @@
  * Description: A program to simulate a deck of cards passed out to card players.
  * By: John Seals, Hanna Bonert, Dustin Fehlman, and Carlos Sanchez 
  */
-import java.util.Random;
+
 import java.util.Scanner;
 
 public class A3 {
@@ -25,19 +25,18 @@ public class A3 {
         for(int x = 0; x < handList.length; x++) {
             handList[x] = new Hand();
         }
-        //Will delete after issue with topcard is fixed.
-        int testCards = 10;
+     
         //Loops to put all cards in the deck into player hands.
         do {
             for(int playerIndex = 0; playerIndex < handList.length; playerIndex++) {
-                //Used for testing. Will delete System.out.println(singleDeck.dealCard().toString());
-                handList[playerIndex].takeCard(singleDeck.dealCard());
-                --testCards; //will be deleted later;
-            }
-            
-        }while(testCards > 0);
-       
-        //while(singleDeck.getTopCard() > 0);
+                if(singleDeck.getTopCard() > 0) {
+                    handList[playerIndex].takeCard(singleDeck.dealCard());
+                }
+                else {
+                    break;
+                }
+            }     
+        }while(singleDeck.getTopCard() > 0);
          
         System.out.println("Here are our hands, from an unshuffled deck:");
         //Loops to print hands
@@ -71,20 +70,18 @@ public class A3 {
         for(Hand hand : handList) {
             hand.resetHand();
         }
-        
-        //Will delete after issue with topcard is fixed.
-        testCards = 10;
+      
         //Loops to put all cards in the deck into player hands.
         do {
             for(int playerIndex = 0; playerIndex < handList.length; playerIndex++) {
-                //Used for testing. Will delete System.out.println(singleDeck.dealCard().toString());
-                handList[playerIndex].takeCard(singleDeck.dealCard());
-                --testCards; //will be deleted later;
-            }
-            
-        }while(testCards > 0);
-       
-        //while(singleDeck.getTopCard() > 0);
+                if(singleDeck.getTopCard() > 0) {
+                    handList[playerIndex].takeCard(singleDeck.dealCard());
+                }
+                else {
+                    break;
+                }
+            }     
+        }while(singleDeck.getTopCard() > 0);
         
         System.out.println("Here are our hands, from a shuffled deck:");
         //Loops to print hands
@@ -335,25 +332,21 @@ class Deck {
   // constructor with parameter for number of packs
   public Deck(int numPacks) {
       allocateMasterPack();
-      this.cards = masterPack;
+      cards = new Card[MAX_CARDS];
       init(numPacks);
   }
 
   // initiates deck of cards from masterPack for number of packs
   public void init(int numPacks) {
-      this.numPacks = numPacks;
-      getTopCard();
       if (topCard <= MAX_CARDS) {
-          cards = new Card[topCard];
-          for (int k = 0; k < cards.length; k++)
-              cards[k] = new Card();
-          for (int k = 0; k < numPacks; k++) {
-              for (int i = 52 * k, j = 0; i < 52 * k + 52; i++, j++) {
-                  cards[i] = masterPack[j];
-              }
-          }
-      } else
+          for (int i = 0; i < numPacks; i++)
+              for (int k = 0; k < 52; k++)
+                  cards[i * 52 + k] = masterPack[k];
+          this.numPacks = numPacks;
+          topCard = numPacks * 52;
+      } else {
           return;
+      }
   }
 
   // shuffles the deck of cards by switching each cards in the deck
@@ -384,11 +377,11 @@ class Deck {
 
   // pulls top card in the array
   public int getTopCard() {
-      topCard = 52 * numPacks;
       return topCard;
   }
 
-  //Accessor for an individual card.  Returns a card with errorFlag = true if k is bad
+  // Accessor for an individual card. Returns a card with errorFlag = true if
+  // k is bad
   public Card inspectCard(int k) {
       Card card;
       if (k > topCard) {
@@ -445,4 +438,61 @@ class Deck {
 
 }
 
+/*--------------- run #1 ----------------------------------
+How many hands? (1 - 10, please): 7
+Here are our hands, from an unshuffled deck:
+Hand = (K of spades, 6 of spades, Q of hearts, 5 of hearts, J of diamonds, 4 of diamonds, T of clubs, 3 of clubs)
+Hand = (Q of spades, 5 of spades, J of hearts, 4 of hearts, T of diamonds, 3 of diamonds, 9 of clubs, 2 of clubs)
+Hand = (J of spades, 4 of spades, T of hearts, 3 of hearts, 9 of diamonds, 2 of diamonds, 8 of clubs, A of clubs)
+Hand = (T of spades, 3 of spades, 9 of hearts, 2 of hearts, 8 of diamonds, A of diamonds, 7 of clubs)
+Hand = (9 of spades, 2 of spades, 8 of hearts, A of hearts, 7 of diamonds, K of clubs, 6 of clubs)
+Hand = (8 of spades, A of spades, 7 of hearts, K of diamonds, 6 of diamonds, Q of clubs, 5 of clubs)
+Hand = (7 of spades, K of hearts, 6 of hearts, Q of diamonds, 5 of diamonds, J of clubs, 4 of clubs)
 
+Please press ENTER to continue
+
+Here are our hands, from a shuffled deck:
+Hand = (Q of diamonds, J of hearts, 5 of hearts, 9 of spades, K of spades, 4 of diamonds, J of diamonds, T of hearts)
+Hand = (2 of hearts, 9 of diamonds, K of clubs, 3 of clubs, Q of spades, 2 of clubs, T of clubs, 3 of hearts)
+Hand = (K of diamonds, J of spades, 7 of hearts, Q of clubs, 6 of spades, 6 of hearts, 8 of hearts, 2 of spades)
+Hand = (K of hearts, 8 of diamonds, A of clubs, 2 of diamonds, 5 of diamonds, 5 of spades, A of diamonds)
+Hand = (5 of clubs, A of hearts, 6 of clubs, Q of hearts, 7 of clubs, 9 of hearts, J of clubs)
+Hand = (8 of spades, A of spades, 6 of diamonds, T of diamonds, 7 of spades, 9 of clubs, 4 of hearts)
+Hand = (4 of clubs, 4 of spades, 8 of clubs, T of spades, 7 of diamonds, 3 of diamonds, 3 of spades)
+*/
+
+/*--------------- run #2 ----------------------------------
+How many hands? (1 - 10, please): -1
+How many hands? (1 - 10, please): 20
+How many hands? (1 - 10, please): 3
+Here are our hands, from an unshuffled deck:
+Hand = (K of spades, T of spades, 7 of spades, 4 of spades, A of spades, J of hearts, 8 of hearts, 5 of hearts, 2 of hearts, Q of diamonds, 9 of diamonds, 6 of diamonds, 3 of diamonds, K of clubs, T of clubs, 7 of clubs, 4 of clubs, A of clubs)
+Hand = (Q of spades, 9 of spades, 6 of spades, 3 of spades, K of hearts, T of hearts, 7 of hearts, 4 of hearts, A of hearts, J of diamonds, 8 of diamonds, 5 of diamonds, 2 of diamonds, Q of clubs, 9 of clubs, 6 of clubs, 3 of clubs)
+Hand = (J of spades, 8 of spades, 5 of spades, 2 of spades, Q of hearts, 9 of hearts, 6 of hearts, 3 of hearts, K of diamonds, T of diamonds, 7 of diamonds, 4 of diamonds, A of diamonds, J of clubs, 8 of clubs, 5 of clubs, 2 of clubs)
+
+Please press ENTER to continue
+
+Here are our hands, from a shuffled deck:
+Hand = (8 of diamonds, T of clubs, 4 of hearts, T of diamonds, A of spades, J of spades, 3 of diamonds, 6 of clubs, 5 of spades, 2 of spades, 6 of hearts, Q of spades, Q of diamonds, 3 of spades, 2 of diamonds, J of clubs, K of clubs, 7 of clubs)
+Hand = (A of clubs, 5 of diamonds, Q of hearts, 4 of spades, 2 of hearts, 4 of clubs, J of hearts, 8 of spades, 8 of hearts, Q of clubs, 9 of diamonds, 8 of clubs, 7 of hearts, 6 of spades, A of diamonds, K of diamonds, 9 of hearts)
+Hand = (6 of diamonds, 3 of hearts, 7 of spades, T of hearts, 7 of diamonds, 5 of hearts, 4 of diamonds, T of spades, J of diamonds, 9 of spades, K of spades, K of hearts, 2 of clubs, A of hearts, 9 of clubs, 3 of clubs, 5 of clubs)
+*/
+
+/*--------------- run #3 ----------------------------------
+How many hands? (1 - 10, please): 5
+Here are our hands, from an unshuffled deck:
+Hand = (K of spades, 8 of spades, 3 of spades, J of hearts, 6 of hearts, A of hearts, 9 of diamonds, 4 of diamonds, Q of clubs, 7 of clubs, 2 of clubs)
+Hand = (Q of spades, 7 of spades, 2 of spades, T of hearts, 5 of hearts, K of diamonds, 8 of diamonds, 3 of diamonds, J of clubs, 6 of clubs, A of clubs)
+Hand = (J of spades, 6 of spades, A of spades, 9 of hearts, 4 of hearts, Q of diamonds, 7 of diamonds, 2 of diamonds, T of clubs, 5 of clubs)
+Hand = (T of spades, 5 of spades, K of hearts, 8 of hearts, 3 of hearts, J of diamonds, 6 of diamonds, A of diamonds, 9 of clubs, 4 of clubs)
+Hand = (9 of spades, 4 of spades, Q of hearts, 7 of hearts, 2 of hearts, T of diamonds, 5 of diamonds, K of clubs, 8 of clubs, 3 of clubs)
+
+Please press ENTER to continue
+
+Here are our hands, from a shuffled deck:
+Hand = (Q of diamonds, K of hearts, T of diamonds, 8 of spades, Q of hearts, 6 of diamonds, T of hearts, 8 of hearts, 2 of spades, A of diamonds, 7 of hearts)
+Hand = (9 of spades, K of clubs, 2 of clubs, J of diamonds, J of hearts, J of clubs, A of clubs, 4 of hearts, 6 of hearts, 4 of diamonds, 6 of spades)
+Hand = (K of spades, 5 of spades, 4 of clubs, 7 of diamonds, 3 of diamonds, 5 of hearts, 2 of hearts, 8 of clubs, 5 of diamonds, Q of clubs)
+Hand = (2 of diamonds, 5 of clubs, 3 of hearts, 3 of clubs, 4 of spades, 6 of clubs, 7 of clubs, T of spades, J of spades, 9 of hearts)
+Hand = (T of clubs, Q of spades, 9 of clubs, 9 of diamonds, 3 of spades, K of diamonds, A of spades, A of hearts, 7 of spades, 8 of diamonds)
+*/
