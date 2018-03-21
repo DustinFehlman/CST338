@@ -124,9 +124,9 @@ class Card
  }
  
  /*
-  * Set method: this method sets the card object's value and suit.   
-  * @param: Value will be in the range A,2-9,T,J,Q,K while suit will be one of the 4 standard playing card suits.
-  * @returns: True if the set operation was successful, false otherwise.
+  * This method sets the card object's value and suit.   
+  * Value will be in the range A,2-9,T,J,Q,K while suit will be one of the 4 standard playing card suits.
+  * Returns true if the set operation was successful, false otherwise.
   */
  public boolean set( char value, Suit suit )
  {
@@ -145,9 +145,9 @@ class Card
  }
  
  /*
-  * isValid method: this method determines whether the card's ordinal number is correct.
-  * @param: The card's value number and the card's suit
-  * @returns: True if the data is valid, false otherwise   
+  * This method determines whether the card's ordinal number is correct.
+  * Passed the card's value number and the card's suit
+  * Returns true if the data is valid, false otherwise   
   */
  private static boolean isValid(char value, Suit suit)//Can use '==' because char is a primitive type
  {
@@ -159,8 +159,8 @@ class Card
  }
  
  /*
-  * toString method: Allows us to see/display a string representation of a card. 
-  * @returns: Returns either the card as a string or an error message if the card has bad data.
+  * toString allows us to see/display a string representation of a card. 
+  *  Returns either the card as a string or an error message if the card has bad data.
   */
  public String toString()
  {
@@ -176,8 +176,8 @@ class Card
  }
 
  /*
-  * getSuit method: Provides read only access to the suit variable.
-  * @returns: Returns the card's suit.
+  * getSuit method provides read only access to the suit variable.
+  * Returns the card's suit.
   */
  public Suit getSuit()
  {
@@ -185,8 +185,8 @@ class Card
  }
  
  /*
-  * getValue method: Provides read only access to the value variable.
-  * @returns: Returns the card's ordinal number value.
+  * Provides read only access to the value variable.
+  * Returns the card's ordinal number value.
   */
  public char getValue()
  {
@@ -194,8 +194,8 @@ class Card
  }
  
  /*
-  * getFlag method: Provides read only access to the errorFag which tells us if the card has bad data.
-  * @returns: A false value indicates the card has good data, true indicates the card had bad data.
+  * getFlag method provides read only access to the errorFag which tells us if the card has bad data.
+  * Returns a false value indicates the card has good data, true indicates the card had bad data.
   */
  public boolean getFlag()
  {
@@ -203,9 +203,9 @@ class Card
  }
  
  /*
-  * equals method: This method determines whether two cards are equivalent, also returns true if two cards refer to 
+  * equals method determines whether two cards are equivalent, also returns true if two cards refer to 
   * the same card.
-  * @returns: True if the cards have the same values in their storage variables or if both references refer to the 
+  * Returns true if the cards have the same values in their storage variables or if both references refer to the 
   * same object.  
   */
  public boolean eqauls( Card card )
@@ -226,7 +226,7 @@ class Hand
    private Card[] myCards;
    private int numCards;
    
-   //Default constructor for Hand class, array is initialized
+   // Default constructor for Hand class, array is initialized
    public Hand()
    {
       myCards = new Card[MAX_CARDS];
@@ -239,8 +239,10 @@ class Hand
       numCards = 0;
    }
    
-   //Simulates taking a new card for the hand. If the hand is full, return false.
-   //Otherwise, add an object copy of the card to the hand
+   /*
+    * Simulates taking a new card for the hand. If the hand is full, return false.
+    * Otherwise, add an object copy of the card to the hand
+    */
    public boolean takeCard(Card card)
    {
       if(numCards == MAX_CARDS)
@@ -251,14 +253,14 @@ class Hand
       return true;      
    }
    
-   //Play a card. Decrease numCards
+   // Play a card. Decrease numCards
    public Card playCard()
    {
       numCards--;
       return myCards[numCards]; //Returns the card at the old numCards - 1, which is the new numCards
    }
    
-   //Puts all the values in the hand into a String
+   // Puts all the values in the hand into a String
    public String toString()
    {
       String retStr = "";
@@ -275,8 +277,10 @@ class Hand
       return numCards;
    }
    
-   //returns the card in the hand at k if k is legal. Otherwise a card with
-   //errorCard set to true is returned.
+   /*
+    * returns the card in the hand at k if k is legal. Otherwise a card with
+    * errorCard set to true is returned.
+    */
    Card inspectCard(int k)
    {
       //creates a card with errorFlag = true
@@ -352,8 +356,10 @@ class Deck {
       return topCard;
   }
 
-  // Accessor for an individual card. Returns a card with errorFlag = true if
-  // k is bad
+  /*
+   * Accessor for an individual card. Returns a card with errorFlag = true if
+   * k is bad
+   */
   public Card inspectCard(int k) {
       Card card;
       if (k > topCard) {
