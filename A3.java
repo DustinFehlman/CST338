@@ -226,25 +226,7 @@ class Card
     else
        return false;
  }
- 
- //Test for the card class
- public static void main( String[] args )
- {
-    Card card1 = new Card();
-    Card card2 = new Card( 'T',Suit.hearts );
-    Card card3 = new Card( '1',Suit.clubs );
-    
-    System.out.println( "Card1 = " + card1.toString() );
-    System.out.println( "Card2 = " + card2.toString() );
-    System.out.println( "Card3 = " + card3.toString() );
-    
-    card2.set( '0', Suit.diamonds );
-    card3.set( 'K', Suit.diamonds );
-    
-    System.out.println( "New Card2 = " + card2.toString() );
-    System.out.println( "New Card3 = " + card3.toString() );
- }
- 
+  
 }//end of class bracket
 
 
