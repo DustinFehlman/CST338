@@ -21,20 +21,15 @@ public class A3 {
         Deck singleDeck = new Deck(numPacks);
         Hand[] handList = new Hand[totalHands];
         
-        //Creates hands objects and stores them in a array.
+        //Creates hand objects and stores them in a array.
         for(int x = 0; x < handList.length; x++) {
             handList[x] = new Hand();
         }
      
         //Loops to put all cards in the deck into player hands.
         do {
-            for(int playerIndex = 0; playerIndex < handList.length; playerIndex++) {
-                if(singleDeck.getTopCard() > 0) {
-                    handList[playerIndex].takeCard(singleDeck.dealCard());
-                }
-                else {
-                    break;
-                }
+            for(int playerIndex = 0; playerIndex < handList.length && singleDeck.getTopCard() > 0; playerIndex++) {
+                handList[playerIndex].takeCard(singleDeck.dealCard());
             }     
         }while(singleDeck.getTopCard() > 0);
          
@@ -73,13 +68,8 @@ public class A3 {
       
         //Loops to put all cards in the deck into player hands.
         do {
-            for(int playerIndex = 0; playerIndex < handList.length; playerIndex++) {
-                if(singleDeck.getTopCard() > 0) {
-                    handList[playerIndex].takeCard(singleDeck.dealCard());
-                }
-                else {
-                    break;
-                }
+            for(int playerIndex = 0; playerIndex < handList.length && singleDeck.getTopCard() > 0; playerIndex++) {
+                handList[playerIndex].takeCard(singleDeck.dealCard());
             }     
         }while(singleDeck.getTopCard() > 0);
         
